@@ -7,7 +7,7 @@ export class RecruitmentsController {
     constructor(private readonly recruimentService: RecruitmentsService) {}
 
     @Post() 
-    createRecruiment(@Body() recruitmentData: CreateRecruitmentDTO) {
+    createRecruitment(@Body() recruitmentData: CreateRecruitmentDTO) {
         return this.recruimentService.createRecruitment(recruitmentData); 
     }
 }

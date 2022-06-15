@@ -1,11 +1,11 @@
 import { Company } from 'src/companies/companies.entity';
 import { ApplyHistory } from 'src/users/applyhistories.entity';
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 
 @Entity("Recruitment") 
 export class Recruitment {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     public id: number; 
 
     @Column()

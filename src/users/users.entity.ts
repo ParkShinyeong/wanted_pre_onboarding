@@ -1,10 +1,10 @@
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import {Recruitment} from "../recruitments/recruitments.entity"
 import { ApplyHistory } from './applyhistories.entity';
 
 @Entity("User") 
 export class User {
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn()
     public id: number; 
 
     @Column()
