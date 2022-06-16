@@ -12,7 +12,7 @@ export class CompaniesController {
     }; 
 
     @Get("/:id")
-    findOneCompany(@Param() companyId: number) {
+    findOneCompany(@Param('id') companyId: number) {
         return this.companyService.findOneByCompanyId(companyId);  
     }; 
 

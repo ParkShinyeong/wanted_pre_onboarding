@@ -1,6 +1,6 @@
 import { Company } from 'src/companies/companies.entity';
 import { ApplyHistory } from 'src/users/applyhistories.entity';
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 
 @Entity("Recruitment") 
@@ -12,7 +12,7 @@ export class Recruitment {
     public recruit_position: string;
 
     @Column()
-    public recruit_compensation: string;
+    public recruit_compensation: number;
 
     @Column()
     public recruit_content: string;
@@ -34,8 +34,8 @@ export class Recruitment {
     public applyHistories!: ApplyHistory[]; 
 
     @ManyToOne(() => Company, company => company.recruiment, {
-        nullable: false, 
-        onDelete: "CASCADE"
+        // nullable: false, 
+        onDelete: "CASCADE",
     })
     public company: Company;
 }

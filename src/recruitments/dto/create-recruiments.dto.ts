@@ -1,12 +1,12 @@
-import { IsString } from 'class-validator';
+import { IsNumber, IsString } from 'class-validator';
 
 
 export class CreateRecruitmentDTO {
     @IsString()
     readonly recruit_position: string; 
 
-    @IsString()
-    readonly recruit_compensation: string; 
+    @IsNumber()
+    readonly recruit_compensation: number; 
 
     @IsString()
     readonly recruit_content: string; 
@@ -14,4 +14,6 @@ export class CreateRecruitmentDTO {
     @IsString()
     readonly stack: string; 
 
+    @IsNumber()
+    readonly companyId: number; 
 }

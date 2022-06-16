@@ -10,4 +10,5 @@ export class RecruitmentsController {
     createRecruitment(@Body() recruitmentData: CreateRecruitmentDTO) {
         return this.recruimentService.createRecruitment(recruitmentData); 
     }
+
 }

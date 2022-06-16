@@ -1,5 +1,5 @@
 import { Recruitment } from 'src/recruitments/recruitments.entity';
-import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 
 @Entity("Company") 
@@ -22,7 +22,8 @@ export class Company {
     @UpdateDateColumn({type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)"})
     public updated_at: Date;
 
-    @OneToMany(() => Recruitment, (recruitment) => recruitment.company)
+    @OneToMany(() => Recruitment, (recruitment) => recruitment.company, {cascade: true})
+    @JoinColumn()
     public recruiment: Recruitment[]; 
 
 }
