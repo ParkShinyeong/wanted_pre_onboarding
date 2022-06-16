@@ -22,7 +22,7 @@ export class UsersService {
             where: {id: userId}, 
         }); 
 
-        if(!user) {
+        if(!user.length) {
             throw new NotFoundException(`User with ID ${userId} not found`); 
         }
         
