@@ -22,6 +22,11 @@ export class RecruitmentsController {
         return this.recruitmentService.findAll(); 
     }
 
+    @Get("/:id")
+    findOneRecruitment(@Param("id") recruitmentId: number) {
+        return this.recruitmentService.findOneByRecruitmentId(recruitmentId); 
+    }
+
     @Delete("/:id")
     deleteRecruitment(@Param("id") recruitmentId: number) {
         return this.recruitmentService.deleteRecruitment(recruitmentId)
