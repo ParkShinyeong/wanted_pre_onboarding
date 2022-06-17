@@ -28,12 +28,11 @@ export class UsersService {
 
     // 유저 id 체크  
     async checkId(userId: number): Promise<boolean> {
-        const user = await this.userRepository.find({
-            select: ['id', 'name', 'email', 'created_at', 'updated_at'], 
+        const user = await this.userRepository.findOne({
             where: {id: userId}, 
         }); 
 
-        if(!user.length) return false;
+        if(!user) return false;
         return true; 
     }; 
 
@@ -55,10 +54,11 @@ export class UsersService {
         const { user_id, recruitment_id } = applyData; 
         const checkUser = await this.checkId(user_id); 
         if(!checkUser) {
+
             throw new NotFoundException(`User with ID ${user_id} not found`); 
         };
 
-        const checkRecruitment = this.recruitmentService.checkId(recruitment_id)
+        const checkRecruitment = await this.recruitmentService.checkId(recruitment_id)
         if(!checkRecruitment) {
             throw new NotFoundException(`Recruitment with ID ${recruitment_id} not found`);
         };
@@ -67,7 +67,7 @@ export class UsersService {
             user_id: user_id,
             recruitment_id: recruitment_id
         }], ["user_id", "recruitment_id"]);
-         
+
         return { message: "Create success!" };
     }
 }; 
