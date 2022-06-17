@@ -8,19 +8,17 @@ export class UsersController {
     constructor(private readonly userService: UsersService) {}
 
     @Post() 
-    createUser(@Body() userData: CreateUserDTO) {
+    createUser(@Body() userData: CreateUserDTO): Promise<object> {
         return this.userService.createUser(userData); 
     }; 
 
     @Get("/:id")
-    findOneUser(@Param('id') userId: number) {
+    findOneUser(@Param('id') userId: number): Promise<object> {
         return this.userService.findOneByUserId(userId);  
     }; 
 
     @Post("/applies") 
-    createApplyHistory(@Body() applyData: CreateApplyHistoryDTO) {
+    createApplyHistory(@Body() applyData: CreateApplyHistoryDTO): Promise<object> {
         return this.userService.applyRecruitment(applyData);
-    }
-    
-
-}
+    };
+};

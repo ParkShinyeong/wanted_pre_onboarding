@@ -1,7 +1,6 @@
 import { Company } from 'src/companies/companies.entity';
 import { ApplyHistory } from 'src/users/applyhistories.entity';
-import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity("Recruitment") 
 export class Recruitment {
@@ -34,9 +33,8 @@ export class Recruitment {
 
     @ManyToOne(() => Company, company => company.recruitment, {
         nullable: false, 
-        eager: true,
         onDelete: "CASCADE",
     })
     @JoinColumn({name: "company_id", referencedColumnName: "id"}) 
     public company: Company;
-}
+};

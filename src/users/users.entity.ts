@@ -1,5 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
-import {Recruitment} from "../recruitments/recruitments.entity"
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 import { ApplyHistory } from './applyhistories.entity';
 
 @Entity("User") 
@@ -21,4 +20,4 @@ export class User {
     
     @OneToMany(() => ApplyHistory, applyHistory => applyHistory.user) 
     public applyHistory!: ApplyHistory[]; 
-}
+};

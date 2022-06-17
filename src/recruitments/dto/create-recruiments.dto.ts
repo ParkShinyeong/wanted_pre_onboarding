@@ -15,4 +15,4 @@ export class CreateRecruitmentDTO {
 
     @IsNumber()
     readonly company_id: number; 
-}
+}; 

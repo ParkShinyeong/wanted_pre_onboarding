@@ -33,5 +33,4 @@ export class ApplyHistory {
     })
     @JoinColumn({name: "user_id", referencedColumnName: "id"})
     public user: User;
-    
-}
+};

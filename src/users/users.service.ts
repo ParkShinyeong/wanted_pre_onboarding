@@ -20,52 +20,53 @@ export class UsersService {
     }
 
     // 유저 생성 
-    async createUser(userData: CreateUserDTO) {
-        const newUser = this.userRepository.create(userData)
+    async createUser(userData: CreateUserDTO): Promise<object> {
+        const newUser = this.userRepository.create(userData);
         await this.userRepository.insert(newUser); 
+        return { message: "Create success!" };
     }; 
 
-    async findOneByUserId(userId: number) {
+    // 유저 id 체크  
+    async checkId(userId: number): Promise<boolean> {
+        const user = await this.userRepository.find({
+            select: ['id', 'name', 'email', 'created_at', 'updated_at'], 
+            where: {id: userId}, 
+        }); 
+
+        if(!user.length) return false;
+        return true; 
+    }; 
+
+    // 유저 정보 확인   
+    async findOneByUserId(userId: number): Promise<object> {
         const user = await this.userRepository.find({
             select: ['id', 'name', 'email', 'created_at', 'updated_at'], 
             where: {id: userId}, 
         }); 
 
         if(!user.length) {
-            return false; 
+            throw new NotFoundException(`User with ID ${userId} not found`); 
         }
-        
-        return true; 
+        return user; 
     }; 
 
-    async applyRecruitment(applyData: CreateApplyHistoryDTO) {
+    // 채용 공고 지원 
+    async applyRecruitment(applyData: CreateApplyHistoryDTO): Promise<object> {
         const { user_id, recruitment_id } = applyData; 
-        if(!this.findOneByUserId(user_id)) {
+
+        if(!this.checkId(user_id)) {
             throw new NotFoundException(`User with ID ${user_id} not found`); 
-        }
+        };
 
         if(!this.recruitmentService.checkId(recruitment_id)) {
             throw new NotFoundException(`Recruitment with ID ${recruitment_id} not found`);
-        }
+        };
 
-        // ? 중복 지원 시 예외 처리를 해준다. 
-        // const apply = await this.applyHistoryRepository.find({
-        //     where: { user_id: user_id, recruitment_id: recruitment_id}
-        // })
-        // if(apply.length) {
-        // // 중복 시 예외 처리
-        //     throw new ConflictException("Already Exist apply")
-        // }
-
-        // // 지원 성공 
-        // const newApply = this.applyHistoryRepository.create(applyData);
-        // const newApplyData = await this.applyHistoryRepository.insert(newApply);
-
-        // ? 중복이 발생하지는 않지만 예외 처리가 되지 않는다. 
         await this.applyHistoryRepository.upsert([{
             user_id: user_id,
             recruitment_id: recruitment_id
-        }], ["user_id", "recruitment_id"]); 
-        return;
+        }], ["user_id", "recruitment_id"]);
+         
+        return { message: "Create success!" };
     }
 }; 

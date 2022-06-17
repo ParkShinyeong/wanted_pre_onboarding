@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompaniesService } from 'src/companies/companies.service';
 import { Repository } from 'typeorm';
@@ -19,19 +19,19 @@ export class RecruitmentsService {
     }
 
     //채용 공고 생성 
-    async createRecruitment(recruitmentData: CreateRecruitmentDTO) {
+    async createRecruitment(recruitmentData: CreateRecruitmentDTO): Promise<object> {
         try{
             this.companiesService.findOneByCompanyId(recruitmentData["company_id"]); 
-        } catch(e) {
-            console.log(e); 
-            return e; 
-        }
+        } catch(e) { 
+            throw e; 
+        }; 
         const newRecruitment = this.recruitmentRepository.create(recruitmentData)
         await this.recruitmentRepository.insert(newRecruitment); 
+        return { message: "Create success!" };
     }
 
-    // 채용 공고를 수정합니다. 
-    async updateRecruitment(id: number, updateData: UpdateRecruitmentDTO) {
+    // 채용 공고 수정
+    async updateRecruitment(id: number, updateData: UpdateRecruitmentDTO): Promise<object> {
         
         const checkId = await this.checkId(id)
         if(!checkId) {
@@ -44,9 +44,11 @@ export class RecruitmentsService {
         .set(updateData)
         .where('id = :id',  { id })
         .execute(); 
+
+        return { message: "Update success!" };
     }
 
-    async checkId(id: number) {
+    async checkId(id: number): Promise<boolean> {
         const recruitment = await this.recruitmentRepository.find({
             select: ['id'], 
             where: {id}
@@ -56,23 +58,19 @@ export class RecruitmentsService {
         return true ; 
     }
 
-    // 채용 공고 목록을 가져옵니다. 
-    async findAll() {
-        const recruitmentList = await this.recruitmentRepository
-        // .find({
-        //     select: ['id', 'recruit_position', 'recruit_compensation', 'stack', 'company'], 
-        // }); 
+    // 채용 공고 목록 요청 
+    async findAll(): Promise<object> {
+        const recruitmentList = await this.recruitmentRepository 
         .createQueryBuilder('r')
         .select(['r.id', 'r.recruit_position', 'r.recruit_compensation', 'r.stack', 'c.name', 'c.nation', 'c.city'])
         .leftJoin('r.company', 'c')
-        // .where('r.id = :id', {id: 1})
         .getMany(); 
 
         return recruitmentList; 
     }
 
-    // 채용 상세 페이지를 가져옵니다. 
-    async findOneByRecruitmentId(recruitmentId: number) {
+    // 채용 상세 페이지 요청 
+    async findOneByRecruitmentId(recruitmentId: number): Promise<object> {
         const checkId = await this.checkId(recruitmentId)
         if(!checkId) {
             throw new NotFoundException(`Recruitment with ID ${recruitmentId} not found`);
@@ -96,8 +94,8 @@ export class RecruitmentsService {
         return recruitment; 
     }
 
-    // 채용 공고를 삭제합니다. 
-    async deleteRecruitment(id: number) {
+    // 채용 공고 삭제
+    async deleteRecruitment(id: number): Promise<object> {
 
         const checkId = await this.checkId(id)
         if(!checkId) {
@@ -111,6 +109,6 @@ export class RecruitmentsService {
         .where("id = :id", {id: id})
         .execute(); 
         
-        return; 
+        return { message: "Delete success!" };
     }
 }

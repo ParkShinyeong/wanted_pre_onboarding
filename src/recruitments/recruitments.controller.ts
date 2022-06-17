@@ -7,29 +7,28 @@ import { RecruitmentsService } from './recruitments.service';
 export class RecruitmentsController {
     constructor(private readonly recruitmentService: RecruitmentsService) {}
 
+    @Get() 
+    findAllRecruitment(): Promise<object>  {
+        return this.recruitmentService.findAll(); 
+    }
+
     @Post() 
-    createRecruitment(@Body() recruitmentData: CreateRecruitmentDTO) {
+    createRecruitment(@Body() recruitmentData: CreateRecruitmentDTO): Promise<object> {
         return this.recruitmentService.createRecruitment(recruitmentData); 
     }
 
     @Patch("/:id")
-    updateRecruitment(@Param("id") recruitmentId: number, @Body() updateData: UpdateRecruitmentDTO) {
+    updateRecruitment(@Param("id") recruitmentId: number, @Body() updateData: UpdateRecruitmentDTO): Promise<object> {
         return this.recruitmentService.updateRecruitment(recruitmentId, updateData); 
     }
 
-    @Get() 
-    findAllRecruitment() {
-        return this.recruitmentService.findAll(); 
-    }
-
     @Get("/:id")
-    findOneRecruitment(@Param("id") recruitmentId: number) {
+    findOneRecruitment(@Param("id") recruitmentId: number): Promise<object> {
         return this.recruitmentService.findOneByRecruitmentId(recruitmentId); 
     }
 
     @Delete("/:id")
-    deleteRecruitment(@Param("id") recruitmentId: number) {
+    deleteRecruitment(@Param("id") recruitmentId: number): Promise<object> {
         return this.recruitmentService.deleteRecruitment(recruitmentId)
     }
-
 }

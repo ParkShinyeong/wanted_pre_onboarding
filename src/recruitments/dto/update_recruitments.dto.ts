@@ -12,5 +12,4 @@ export class UpdateRecruitmentDTO {
 
     @IsString()
     readonly stack: string; 
-
 }; 
