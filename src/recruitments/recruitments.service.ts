@@ -13,7 +13,7 @@ export class RecruitmentsService {
     constructor(
         @InjectRepository(Recruitment) 
         private recruitmentRepository: Repository<Recruitment>,
-        private companiesService: CompaniesService,         
+        private companiesService: CompaniesService,    
         ) {
         this.recruitmentRepository = recruitmentRepository; 
     }
@@ -59,11 +59,16 @@ export class RecruitmentsService {
     }
 
     // 채용 공고 목록 요청 
-    async findAll(): Promise<object> {
+    async findAll(current: number): Promise<object> {
+        const pageSize = 5; 
         const recruitmentList = await this.recruitmentRepository 
         .createQueryBuilder('r')
-        .select(['r.id', 'r.recruit_position', 'r.recruit_compensation', 'r.stack', 'c.name', 'c.nation', 'c.city'])
+        .select(['r.updated_at', 'r.id', 'r.recruit_position', 'r.recruit_compensation', 'r.stack'])
+        .addSelect([ 'c.name', 'c.nation', 'c.city'])
+        .orderBy('r.updated_at', 'DESC')
         .leftJoin('r.company', 'c')
+        .skip(current * pageSize )
+        .take(pageSize)
         .getMany(); 
 
         return recruitmentList; 

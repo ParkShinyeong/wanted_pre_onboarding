@@ -7,9 +7,9 @@ import { RecruitmentsService } from './recruitments.service';
 export class RecruitmentsController {
     constructor(private readonly recruitmentService: RecruitmentsService) {}
 
-    @Get() 
-    findAllRecruitment(): Promise<object>  {
-        return this.recruitmentService.findAll(); 
+    @Get("/:page") 
+    findAllRecruitment(@Param("page") page: number): Promise<object>  {
+        return this.recruitmentService.findAll(page); 
     }
 
     @Post() 
