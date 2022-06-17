@@ -22,7 +22,7 @@ export class RecruitmentsController {
         return this.recruitmentService.updateRecruitment(recruitmentId, updateData); 
     }
 
-    @Get("/:id")
+    @Get("/details/:id")
     findOneRecruitment(@Param("id") recruitmentId: number): Promise<object> {
         return this.recruitmentService.findOneByRecruitmentId(recruitmentId); 
     }

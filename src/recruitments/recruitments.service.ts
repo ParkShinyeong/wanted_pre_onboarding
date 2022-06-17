@@ -18,13 +18,16 @@ export class RecruitmentsService {
         this.recruitmentRepository = recruitmentRepository; 
     }
 
-    async checkId(id: number): Promise<boolean> {
-        const recruitment = await this.recruitmentRepository.find({
-            where: {id}
+    async checkId(id: number): Promise<object> {
+        const recruitment = await this.recruitmentRepository.findOne({
+            where: {id: id}
         }); 
 
-        if(!recruitment.length) return false; 
-        return true ; 
+        if(!recruitment) {
+            throw new NotFoundException(`Recruitment with ID ${id} not found`); 
+        }; 
+
+        return recruitment; 
     }
 
     //채용 공고 생성 
@@ -101,9 +104,9 @@ export class RecruitmentsService {
 
     // 채용 공고 삭제
     async deleteRecruitment(id: number): Promise<object> {
-
         const checkId = await this.checkId(id); 
         if(!checkId) {
+            console.log("얍얍얍") 
             throw new NotFoundException(`Recruitment with ID ${id} not found`);
         }
 
