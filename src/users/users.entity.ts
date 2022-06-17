@@ -18,13 +18,7 @@ export class User {
 
     @UpdateDateColumn({type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)"})
     public updated_at: Date;
-
-    //  @ManyToMany(type => Recruitment, recruitment => recruitment.id, {
-    //      cascade: true
-    //  })
-    //  @JoinTable()
-    //  recruitments: Recruitment[]; 
     
     @OneToMany(() => ApplyHistory, applyHistory => applyHistory.user) 
-    public applyHistories!: ApplyHistory[]; 
+    public applyHistory!: ApplyHistory[]; 
 }

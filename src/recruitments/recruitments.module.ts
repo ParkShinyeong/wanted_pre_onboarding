@@ -9,6 +9,7 @@ import { RecruitmentsService } from './recruitments.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Recruitment, Company]), CompaniesModule],
   controllers: [RecruitmentsController],
-  providers: [RecruitmentsService]
+  providers: [RecruitmentsService], 
+  exports: [RecruitmentsService, TypeOrmModule]
 })
 export class RecruitmentsModule {}

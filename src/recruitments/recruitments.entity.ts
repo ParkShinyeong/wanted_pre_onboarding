@@ -26,18 +26,14 @@ export class Recruitment {
     @UpdateDateColumn({type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)", onUpdate: "CURRENT_TIMESTAMP(6)"})
     public updated_at: Date;
 
-    // @ManyToMany(() => User, user => user.id)
-    // @JoinTable()
-    // users: User[]; 
-
     @Column({nullable: false})
     public company_id: number; 
 
     @OneToMany(() => ApplyHistory, applyHistory => applyHistory.recruitment) 
-    public applyHistories!: ApplyHistory[]; 
+    public applyHistory: ApplyHistory[]; 
 
     @ManyToOne(() => Company, company => company.recruitment, {
-        // nullable: false, 
+        nullable: false, 
         eager: true,
         onDelete: "CASCADE",
     })

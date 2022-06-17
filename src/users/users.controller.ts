@@ -1,4 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { CreateApplyHistoryDTO } from './dto/create-apply-histories.dto';
 import { CreateUserDTO } from './dto/create-users.dto';
 import { UsersService } from './users.service';
 
@@ -15,5 +16,11 @@ export class UsersController {
     findOneUser(@Param('id') userId: number) {
         return this.userService.findOneByUserId(userId);  
     }; 
+
+    @Post("/applies") 
+    createApplyHistory(@Body() applyData: CreateApplyHistoryDTO) {
+        return this.userService.applyRecruitment(applyData);
+    }
+    
 
 }
