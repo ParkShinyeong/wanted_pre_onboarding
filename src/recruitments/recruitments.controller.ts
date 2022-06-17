@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { CreateRecruitmentDTO } from './dto/create-recruiments.dto';
 import { UpdateRecruitmentDTO } from './dto/update_recruitments.dto';
 import { RecruitmentsService } from './recruitments.service';
@@ -14,7 +14,12 @@ export class RecruitmentsController {
 
     @Patch("/:id")
     updateRecruitment(@Param("id") recruitmentId: number, @Body() updateData: UpdateRecruitmentDTO) {
-        return this.recruimentService.updateRecruitment(recruitmentId, updateData)
+        return this.recruimentService.updateRecruitment(recruitmentId, updateData); 
+    }
+
+    @Get() 
+    findAllRecruitment() {
+        return this.recruimentService.findAll(); 
     }
 
 }

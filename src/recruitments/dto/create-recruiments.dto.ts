@@ -1,6 +1,5 @@
 import { IsNumber, IsString } from 'class-validator';
 
-
 export class CreateRecruitmentDTO {
     @IsString()
     readonly recruit_position: string; 
@@ -15,5 +14,5 @@ export class CreateRecruitmentDTO {
     readonly stack: string; 
 
     @IsNumber()
-    readonly companyId: number; 
+    readonly company_id: number; 
 }

@@ -24,6 +24,6 @@ export class Company {
 
     @OneToMany(() => Recruitment, (recruitment) => recruitment.company, {cascade: true})
     @JoinColumn()
-    public recruiment: Recruitment[]; 
+    public recruitment: Recruitment[]; 
 
 }

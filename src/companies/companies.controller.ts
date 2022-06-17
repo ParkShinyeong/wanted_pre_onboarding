@@ -15,5 +15,4 @@ export class CompaniesController {
     findOneCompany(@Param('id') companyId: number) {
         return this.companyService.findOneByCompanyId(companyId);  
     }; 
-
 }

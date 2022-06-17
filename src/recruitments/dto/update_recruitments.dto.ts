@@ -1,6 +1,4 @@
-import { PartialType } from '@nestjs/mapped-types';
 import { IsString, IsNumber } from 'class-validator';
-import { CreateRecruitmentDTO } from './create-recruiments.dto';
 
 export class UpdateRecruitmentDTO {
     @IsString()

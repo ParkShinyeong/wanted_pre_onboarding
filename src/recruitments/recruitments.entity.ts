@@ -30,12 +30,17 @@ export class Recruitment {
     // @JoinTable()
     // users: User[]; 
 
+    @Column({nullable: false})
+    public company_id: number; 
+
     @OneToMany(() => ApplyHistory, applyHistory => applyHistory.recruitment) 
     public applyHistories!: ApplyHistory[]; 
 
-    @ManyToOne(() => Company, company => company.recruiment, {
+    @ManyToOne(() => Company, company => company.recruitment, {
         // nullable: false, 
+        eager: true,
         onDelete: "CASCADE",
     })
+    @JoinColumn({name: "company_id", referencedColumnName: "id"}) 
     public company: Company;
 }
