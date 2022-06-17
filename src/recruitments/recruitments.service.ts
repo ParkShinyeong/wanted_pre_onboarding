@@ -18,13 +18,23 @@ export class RecruitmentsService {
         this.recruitmentRepository = recruitmentRepository; 
     }
 
+    async checkId(id: number): Promise<boolean> {
+        const recruitment = await this.recruitmentRepository.find({
+            where: {id}
+        }); 
+
+        if(!recruitment.length) return false; 
+        return true ; 
+    }
+
     //채용 공고 생성 
     async createRecruitment(recruitmentData: CreateRecruitmentDTO): Promise<object> {
-        try{
-            this.companiesService.findOneByCompanyId(recruitmentData["company_id"]); 
-        } catch(e) { 
-            throw e; 
-        }; 
+        const { company_id } = recruitmentData; 
+        const company = await this.companiesService.findOneByCompanyId(company_id);
+        if(!company) {
+            throw new NotFoundException(`Company with ID ${company_id} not found`); 
+        }
+
         const newRecruitment = this.recruitmentRepository.create(recruitmentData)
         await this.recruitmentRepository.insert(newRecruitment); 
         return { message: "Create success!" };
@@ -46,16 +56,6 @@ export class RecruitmentsService {
         .execute(); 
 
         return { message: "Update success!" };
-    }
-
-    async checkId(id: number): Promise<boolean> {
-        const recruitment = await this.recruitmentRepository.find({
-            select: ['id'], 
-            where: {id}
-        }); 
-
-        if(!recruitment.length) return false; 
-        return true ; 
     }
 
     // 채용 공고 목록 요청 
@@ -102,7 +102,7 @@ export class RecruitmentsService {
     // 채용 공고 삭제
     async deleteRecruitment(id: number): Promise<object> {
 
-        const checkId = await this.checkId(id)
+        const checkId = await this.checkId(id); 
         if(!checkId) {
             throw new NotFoundException(`Recruitment with ID ${id} not found`);
         }
