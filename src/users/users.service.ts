@@ -53,12 +53,13 @@ export class UsersService {
     // 채용 공고 지원 
     async applyRecruitment(applyData: CreateApplyHistoryDTO): Promise<object> {
         const { user_id, recruitment_id } = applyData; 
-
-        if(!this.checkId(user_id)) {
+        const checkUser = await this.checkId(user_id); 
+        if(!checkUser) {
             throw new NotFoundException(`User with ID ${user_id} not found`); 
         };
 
-        if(!this.recruitmentService.checkId(recruitment_id)) {
+        const checkRecruitment = this.recruitmentService.checkId(recruitment_id)
+        if(!checkRecruitment) {
             throw new NotFoundException(`Recruitment with ID ${recruitment_id} not found`);
         };
 

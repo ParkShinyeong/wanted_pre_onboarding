@@ -18,16 +18,16 @@ export class RecruitmentsService {
         this.recruitmentRepository = recruitmentRepository; 
     }
 
-    async checkId(id: number): Promise<object> {
+    async checkId(id: number): Promise<boolean> {
         const recruitment = await this.recruitmentRepository.findOne({
             where: {id: id}
         }); 
 
         if(!recruitment) {
-            throw new NotFoundException(`Recruitment with ID ${id} not found`); 
+           return false; 
         }; 
 
-        return recruitment; 
+        return true; 
     }
 
     //채용 공고 생성 
@@ -67,7 +67,7 @@ export class RecruitmentsService {
         const recruitmentList = await this.recruitmentRepository 
         .createQueryBuilder('r')
         .select(['r.updated_at', 'r.id', 'r.recruit_position', 'r.recruit_compensation', 'r.stack'])
-        .addSelect([ 'c.name', 'c.nation', 'c.city'])
+        .addSelect([ 'c.company_name', 'c.nation', 'c.city'])
         .orderBy('r.updated_at', 'DESC')
         .leftJoin('r.company', 'c')
         .skip(current * pageSize )
@@ -87,7 +87,7 @@ export class RecruitmentsService {
         const recruitment = await this.recruitmentRepository
         .createQueryBuilder('r')
         .select(['r.id', 'r.recruit_position', 'r.recruit_compensation', 'r.stack', 'r.recruit_content'])
-        .addSelect([ 'c.name', 'c.nation', 'c.city'])
+        .addSelect([ 'c.company_name', 'c.nation', 'c.city'])
         .addSelect(['re.id','re.recruit_position', 're.recruit_compensation', 're.stack', 're.recruit_content'])
         .leftJoin('r.company', 'c')
         .where('r.id = :id', {id: recruitmentId})
@@ -106,7 +106,6 @@ export class RecruitmentsService {
     async deleteRecruitment(id: number): Promise<object> {
         const checkId = await this.checkId(id); 
         if(!checkId) {
-            console.log("얍얍얍") 
             throw new NotFoundException(`Recruitment with ID ${id} not found`);
         }
 

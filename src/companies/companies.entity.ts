@@ -8,7 +8,7 @@ export class Company {
     public id: number; 
 
     @Column()
-    public name: string;
+    public company_name: string;
     
     @Column()
     public nation: string;
