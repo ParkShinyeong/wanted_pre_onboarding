@@ -21,13 +21,11 @@ export class RecruitmentsService {
     //채용 공고 생성 
     async createRecruitment(recruitmentData: CreateRecruitmentDTO) {
         try{
-            this.companiesService.findOneByCompanyId(recruitmentData["companyId"]); 
+            this.companiesService.findOneByCompanyId(recruitmentData["company_id"]); 
         } catch(e) {
             console.log(e); 
             return e; 
         }
-        // console.log(recruitmentData); 
-
         const newRecruitment = this.recruitmentRepository.create(recruitmentData)
         await this.recruitmentRepository.insert(newRecruitment); 
     }
@@ -59,5 +57,22 @@ export class RecruitmentsService {
         }
         
         return recruitment; 
+    }
+
+    // 채용 공고 목록을 가져옵니다. 
+    async findAll() {
+        const recruitmentList = await this.recruitmentRepository
+        // .find({
+        //     select: ['id', 'recruit_position', 'recruit_compensation', 'stack', 'company'], 
+        // }); 
+        .createQueryBuilder('r')
+        .select(['r.id', 'r.recruit_position', 'r.recruit_compensation', 'r.stack', 'c.name', 'c.nation', 'c.city'])
+        .leftJoin('r.company', 'c')
+        // .where('r.id = :id', {id: 1})
+        .getMany(); 
+
+        console.log(recruitmentList); 
+        return recruitmentList; 
+
     }
 }
