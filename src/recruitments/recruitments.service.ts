@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompaniesService } from 'src/companies/companies.service';
 import { Repository } from 'typeorm';
@@ -73,6 +73,22 @@ export class RecruitmentsService {
 
         console.log(recruitmentList); 
         return recruitmentList; 
+    }
+
+    // 채용 공고를 삭제합니다. 
+    async deleteRecruitment(id: number) {
+
+        const checkId = await this.findOneByRecruitmentId(id)
+        if(!checkId.length) {
+            throw new NotFoundException(`Recruitment with ID ${id} not found`);
+        }
+
+        await this.recruitmentRepository
+        .createQueryBuilder()
+        .delete()
+        .from(Recruitment)
+        .where("id = :id", {id: id})
+        .execute(); 
 
     }
 }
