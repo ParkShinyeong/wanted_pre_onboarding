@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CompaniesService } from 'src/companies/companies.service';
 import { Repository } from 'typeorm';
@@ -74,6 +74,12 @@ export class RecruitmentsService {
         .take(pageSize)
         .getMany(); 
 
+        if(recruitmentList.length === 0) {
+            throw new HttpException({
+                status: HttpStatus.NO_CONTENT, 
+                error: 'No result found!'
+            }, 204)
+        }
         return recruitmentList; 
     }
 
@@ -88,7 +94,7 @@ export class RecruitmentsService {
         .createQueryBuilder('r')
         .select(['r.id', 'r.recruit_position', 'r.recruit_compensation', 'r.stack', 'r.recruit_content'])
         .addSelect([ 'c.company_name', 'c.nation', 'c.city'])
-        .addSelect(['re.id','re.recruit_position', 're.recruit_compensation', 're.stack', 're.recruit_content'])
+        .addSelect(['re.id','re.recruit_position', 're.recruit_compensation', 're.stack'])
         .leftJoin('r.company', 'c')
         .where('r.id = :id', {id: recruitmentId})
         .leftJoin('c.recruitment', 're')
