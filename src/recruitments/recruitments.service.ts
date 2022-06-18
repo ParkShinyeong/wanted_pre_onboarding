@@ -63,6 +63,7 @@ export class RecruitmentsService {
 
     // 채용 공고 목록 요청 
     async findAll(current: number): Promise<object> {
+        if(!current) current = 0; 
         const pageSize = 5; 
         const recruitmentList = await this.recruitmentRepository 
         .createQueryBuilder('r')
