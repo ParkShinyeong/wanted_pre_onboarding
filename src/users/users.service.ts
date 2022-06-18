@@ -38,12 +38,11 @@ export class UsersService {
 
     // 유저 정보 확인   
     async findOneByUserId(userId: number): Promise<object> {
-        const user = await this.userRepository.find({
-            select: ['id', 'name', 'email', 'created_at', 'updated_at'], 
+        const user = await this.userRepository.findOne({
             where: {id: userId}, 
         }); 
 
-        if(!user.length) {
+        if(!user) {
             throw new NotFoundException(`User with ID ${userId} not found`); 
         }
         return user; 
