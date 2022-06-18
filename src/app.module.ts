@@ -5,7 +5,7 @@ import { UsersModule } from './users/users.module';
 import { RecruitmentsModule } from './recruitments/recruitments.module';
 import { CompaniesModule } from './companies/companies.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import typeOrmConfig from './config/typeorm.config';
+import typeOrmConfig from '../config/typeorm.config';
 
 
 @Module({
