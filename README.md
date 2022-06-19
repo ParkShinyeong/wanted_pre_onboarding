@@ -1,6 +1,23 @@
-# -wanted_pre_onboarding
+# wanted_pre_onboarding
 
-원티드 프리온보딩 사전 과제입니다.
+원티드 프리온보딩 사전 과제입니다. Nest JS와 TypeORM을 사용하였습니다.
+
+### DB Schema
+
+![DB Schema](./image/wanted_preonboarding_3_db_schema.png)
+
+**users** - 사용자 정보 테이블
+**recruitments** - 채용 공고 테이블
+**companies** - 회사 정보 테이블
+**apply_histories** - 채용 공고 지원 현황 테이블
+
+---
+
+### API Document
+
+wanted_preonboarding API document => [ 바로가기! ](https://app.gitbook.com/s/x4jZAKQMxHshfRrJZyC9/)
+
+---
 
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
@@ -49,28 +66,11 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## Seeding
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+$ npm run seed:run
 ```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
