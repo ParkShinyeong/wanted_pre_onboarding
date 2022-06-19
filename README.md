@@ -11,6 +11,8 @@
 **companies** - 회사 정보 테이블 <br />
 **apply_histories** - 채용 공고 지원 현황 테이블 <br />
 
+데이터베이스 명명 규칙(컨벤션)은 다음을 참고하였습니다. => [링크](https://purumae.tistory.com/200)
+
 ---
 
 ### API Document
