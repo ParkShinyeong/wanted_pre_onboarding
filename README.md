@@ -6,10 +6,10 @@
 
 ![DB Schema](./image/wanted_preonboarding_3_db_schema.png)
 
-**users** - 사용자 정보 테이블
-**recruitments** - 채용 공고 테이블
-**companies** - 회사 정보 테이블
-**apply_histories** - 채용 공고 지원 현황 테이블
+**users** - 사용자 정보 테이블 <br />
+**recruitments** - 채용 공고 테이블 <br />
+**companies** - 회사 정보 테이블 <br />
+**apply_histories** - 채용 공고 지원 현황 테이블 <br />
 
 ---
 
